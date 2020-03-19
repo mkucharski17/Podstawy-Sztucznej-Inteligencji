@@ -31,6 +31,6 @@ public class MatchObjectTest {
         assertEquals(2, matchObject.getMatchValue(new boolean[]{false, false, true, false, false, false}));
         assertEquals(14, matchObject.getMatchValue(new boolean[]{true, true, true, true, false, false}));
         assertEquals(10, matchObject.getMatchValue(new boolean[]{true, true, true, true, true, true}));
-        assertEquals(0, matchObject.getMatchValue(new boolean[]{false, false, false, false, false, true}));
+        assertEquals(0, matchObject.getMatchValue(new boolean[]{false, false, false, false, false, false}));
     }
 }
