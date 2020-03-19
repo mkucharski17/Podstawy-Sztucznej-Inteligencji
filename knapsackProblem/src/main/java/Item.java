@@ -20,4 +20,12 @@ public class Item {
 
         return false;
     }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }

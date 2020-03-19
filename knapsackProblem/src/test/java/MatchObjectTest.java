@@ -14,14 +14,7 @@ public class MatchObjectTest {
 
     @Before
     public void setUp(){
-        Decoder decoder = new Decoder(new ArrayList<>(Arrays.asList(
-                new Item(1,2),
-                new Item(2,3),
-                new Item(4,2),
-                new Item(2,7),
-                new Item(1,4),
-                new Item(8,4)
-        )));
+        Decoder decoder = new Decoder("src/main/resources/Inputs/input.txt");
         matchObject = new MatchObject(decoder,10);
     }
 
