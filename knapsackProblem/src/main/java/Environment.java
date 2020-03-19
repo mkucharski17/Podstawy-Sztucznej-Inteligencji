@@ -5,10 +5,10 @@ public class Environment {
     private ArrayList<boolean[] > population;
     private GeneticAlgorithm geneticAlgorithm;
 
-    public Environment( ArrayList<Item> items, int capacity) {
+    public Environment( int capacity, String fileName) {
         population = new ArrayList<boolean[] >();
         generatePopulation();
-        geneticAlgorithm = new GeneticAlgorithm(capacity, new Decoder(items));
+        geneticAlgorithm = new GeneticAlgorithm(capacity, new Decoder(fileName));
     }
 
     private void generatePopulation(){

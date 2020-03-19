@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hello world");
-        int capacity = 0;
-        ArrayList<Item> items = new ArrayList<Item>();
-        Environment environment = new Environment(items,capacity);
-        ArrayList answear = environment.findBestMatch();
+        if(args.length != 2){
+            System.err.println("Wrong number of arguments!");
+            return;
+        } else {
+            Environment environment = new Environment(Integer.parseInt(args[0]),args[1]);
+            ArrayList answear = environment.findBestMatch();
+        }
     }
 }
