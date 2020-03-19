@@ -23,10 +23,6 @@ public class Decoder {
             e.printStackTrace();
             return false;
         }
-
-        for(Item item : items){
-            System.out.println(item.getWeight() + "\t" + item.getValue());
-        }
         return true;
     }
 
