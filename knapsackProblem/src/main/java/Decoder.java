@@ -23,10 +23,6 @@ public class Decoder {
             e.printStackTrace();
             return false;
         }
-
-        for(Item item : items){
-            System.out.println(item.getWeight() + "\t" + item.getValue());
-        }
         return true;
     }
 
@@ -45,5 +41,9 @@ public class Decoder {
     public boolean[]  toGenotype(){
 
         return new boolean[]{true};
+    }
+
+    public int getChromosomNumber(){
+        return items.size();
     }
 }

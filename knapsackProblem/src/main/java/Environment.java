@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Environment {
@@ -7,12 +8,20 @@ public class Environment {
 
     public Environment( int capacity, String fileName) {
         population = new ArrayList<boolean[] >();
-        generatePopulation();
-        geneticAlgorithm = new GeneticAlgorithm(capacity, new Decoder(fileName));
+        Decoder decoder = new Decoder(fileName);
+        generatePopulation(decoder.getChromosomNumber());
+        geneticAlgorithm = new GeneticAlgorithm(capacity, decoder);
     }
 
-    private void generatePopulation(){
-
+    //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 15
+    private void generatePopulation(int chromosomNumber){
+        Random r = new Random();
+        for(int i=0;i<15;i++){
+            boolean[] temp = new boolean[chromosomNumber];
+            for(int j=0;j<chromosomNumber;j++)
+                temp[j] = r.nextBoolean();
+            population.add(temp);
+        }
     }
 
     public ArrayList<Item> findBestMatch(){
