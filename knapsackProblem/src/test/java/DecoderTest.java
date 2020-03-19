@@ -12,14 +12,7 @@ public class DecoderTest {
 
     @Before
     public void setUp() throws Exception {
-        decoder = new Decoder(new ArrayList<>(Arrays.asList(
-                new Item(1, 2),
-                new Item(2, 3),
-                new Item(4, 2),
-                new Item(2, 7),
-                new Item(1, 4),
-                new Item(8, 4)
-        )));
+        decoder = new Decoder("src/main/resources/Inputs/input.txt");
     }
 
     @Test
