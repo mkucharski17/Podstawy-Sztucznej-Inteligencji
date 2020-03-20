@@ -6,7 +6,7 @@ public class Environment {
     private GeneticAlgorithm geneticAlgorithm;
 
     public Environment( int capacity, String fileName) {
-        population = new ArrayList<boolean[] >();
+        population = new ArrayList<>();
         generatePopulation();
         geneticAlgorithm = new GeneticAlgorithm(capacity, new Decoder(fileName));
     }
