@@ -12,7 +12,6 @@ public class MatchObject {
 
     public int getMatchValue(boolean[]  genotype) {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);
-        System.out.println(phenotype.size());
         int value = getTotalValue(phenotype);
         if (!isWeightProperly(phenotype))
             return capacity;
