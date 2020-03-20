@@ -23,18 +23,71 @@ public class DecoderTest {
                 new Item(4, 2)
         )
         ), decoder.toPhenotype(new boolean[]{true, true, true, false, false, false}));
+
         assertEquals(new ArrayList<>(Collections.singletonList(
                 new Item(4, 2)
         )
         ), decoder.toPhenotype(new boolean[]{false, false, true, false, false, false}));
+
         assertEquals(new ArrayList<>(Arrays.asList(
                 new Item(4, 2),
                 new Item(8, 4)
         )
         ), decoder.toPhenotype(new boolean[]{false, false, true, false, false, true}));
+
+        assertEquals(new ArrayList<>(), decoder.toPhenotype(new boolean[]{false, false, false, false, false, false}));
+
+        assertEquals(new ArrayList<>(Arrays.asList(
+                new Item(2, 3),
+                new Item(4, 2),
+                new Item(2, 7),
+                new Item(8, 4)
+        )
+        ), decoder.toPhenotype(new boolean[]{false, true, true, true, false, true}));
+
+        assertEquals(new ArrayList<>(Arrays.asList(
+                new Item(1, 2),
+                new Item(2, 3),
+                new Item(4, 2),
+                new Item(2, 7),
+                new Item(1, 4),
+                new Item(8, 4)
+        )
+        ), decoder.toPhenotype(new boolean[]{true, true, true, true, true, true}));
     }
+
 
     @Test
     public void toGenotype() {
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}
+                , decoder.toGenotype(new ArrayList<>(Arrays.asList(
+                        new Item(1, 2),
+                        new Item(2, 3),
+                        new Item(4, 2),
+                        new Item(2, 7),
+                        new Item(1, 4),
+                        new Item(8, 4)
+                ))));
+
+        assertArrayEquals(new boolean[]{false, false, false, true, true, true}
+                , decoder.toGenotype(new ArrayList<>(Arrays.asList(
+                        new Item(2, 7),
+                        new Item(1, 4),
+                        new Item(8, 4)
+                ))));
+
+        assertArrayEquals(new boolean[]{true, false, true, false, true, false}
+                , decoder.toGenotype(new ArrayList<>(Arrays.asList(
+                        new Item(1, 2),
+                        new Item(4, 2),
+                        new Item(1, 4)
+                        ))));
+
+        assertArrayEquals(new boolean[]{false, false, false, false, false, false}
+                , decoder.toGenotype(new ArrayList<>()));
+
+        assertArrayEquals(new boolean[]{false, false, false, false, false, true}
+                , decoder.toGenotype(new ArrayList<>(Collections.singletonList(new Item(8, 4)
+                ))));
     }
 }
