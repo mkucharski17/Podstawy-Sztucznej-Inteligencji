@@ -8,7 +8,8 @@ public class Main {
             System.err.println("Wrong number of arguments!");
         } else {
             Environment environment = new Environment(Integer.parseInt(args[0]),args[1]);
-            ArrayList answear = environment.findBestMatch();
+            ArrayList answear = environment.findBestPopulation();
+            boolean[] bestfit = environment.findBestMatch();
         }
     }
 }

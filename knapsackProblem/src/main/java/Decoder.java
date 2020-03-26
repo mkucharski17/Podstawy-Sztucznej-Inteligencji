@@ -44,7 +44,7 @@ public class Decoder {
         return genotype;
     }
 
-    public int getChromosomNumber(){
+    public int getGensNumber(){
         return items.size();
     }
 }
