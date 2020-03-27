@@ -44,7 +44,7 @@ public class Decoder {
         return genotype;
     }
 
-    public int getGensNumber(){
+    public int getGensNumber() {
         return items.size();
     }
 }

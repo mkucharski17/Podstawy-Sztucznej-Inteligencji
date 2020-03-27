@@ -3,38 +3,32 @@ import java.util.Random;
 
 
 public class Environment {
-    private ArrayList<boolean[] > population;
+    private Population population;
     private GeneticAlgorithm geneticAlgorithm;
 
-    public Environment( int capacity, String fileName) {
-        population = new ArrayList<boolean[] >();
+    public Environment(int capacity, String fileName) {
         Decoder decoder = new Decoder(fileName);
-        generatePopulation(decoder.getGensNumber());
+        population = new Population(generatePopulation(decoder.getGensNumber()));
         geneticAlgorithm = new GeneticAlgorithm(capacity, decoder);
     }
 
     //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 15
-    private void generatePopulation(int gensNumber){
+    private ArrayList<boolean[]> generatePopulation(int gensNumber) {
+        ArrayList<boolean[]> specimens = new ArrayList<>();
         Random r = new Random();
-        for(int i=0;i<15;i++){
-            boolean[] temp = new boolean[gensNumber];
-            for(int j=0;j<gensNumber;j++)
-                temp[j] = r.nextBoolean();
-            population.add(temp);
+        for (int i = 0; i < 15; i++) {
+            boolean[] newSpecimen = new boolean[gensNumber];
+            for (int j = 0; j < gensNumber; j++)
+                newSpecimen[j] = r.nextBoolean();
+            specimens.add(newSpecimen);
         }
+        return specimens;
     }
 
-    public ArrayList<boolean[]> findBestPopulation(){
-        while(!geneticAlgorithm.isSatisfied()){
+    public ArrayList<Item> findBestFit() {
+        while (!geneticAlgorithm.isSatisfied()) {
             population = geneticAlgorithm.makeNewGeneration(population);
         }
-        return population;
+        return geneticAlgorithm.getBestPhenotype();
     }
-
-    public boolean[] findBestMatch(){
-        return geneticAlgorithm.getBestFitGenotype();
-    }
-
-
-
 }
