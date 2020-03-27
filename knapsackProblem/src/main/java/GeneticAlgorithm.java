@@ -20,8 +20,8 @@ public class GeneticAlgorithm {
         this.population = population;
 
         //TODO tutaj algorytm wybierania nowego pokolenia
-        // ( wybieranie rodziców do krzyżowania -> krzyżowanie -> mutacja -> zwracamynowe pokolenie)
-        // mutacje proponuję zrobić if(
+        // ( wybieranie rodziców do krzyżowania -> krzyżowanie -> mutacja -> zwracamy nowe pokolenie)
+        // mutacje proponuję zrobić  z prawdopodobieństwem 0.1
 
 
         return this.population;
