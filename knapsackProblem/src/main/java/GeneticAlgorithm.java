@@ -1,47 +1,47 @@
+import com.google.common.primitives.Ints;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.IntStream;
 
 
 public class GeneticAlgorithm {
 
     private int iterationNumber = 100;
     private Population population;
-    private FitObject FitObject;
+    private FitObject fitObject;
 
     GeneticAlgorithm(int capacity, Decoder decoder) {
-        FitObject = new FitObject(decoder, capacity);
+        fitObject = new FitObject(decoder, capacity);
     }
 
-    public Population makeNewGeneration(Population population) {
-        this.population = population;
-
-        //TODO tutaj algorytm wybierania nowego pokolenia
-        // ( wybieranie rodziców do krzyżowania -> krzyżowanie -> mutacja -> zwracamy nowe pokolenie)
-        // mutacje proponuję zrobić  z prawdopodobieństwem 0.1
-
-
+    public Population makeNewGeneration(Population oldpopulation) {
+        population = oldpopulation;
+        makeSelectionRoulette();//lub makeSelectionBestN()
+        population.reproduct();
+        population.mutate();
         return this.population;
     }
 
-    private void makeSelection() {
+
+    private void makeSelectionRoulette() {
         int[] fitPoints = calculateFitPoints();
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
         double[] chooseRanges = calculateChooseRanges(fitPoints, amountOfFitPoints);
-        this.population = selectNewPopulation(chooseRanges);
+        this.population = selectNewPopulationRoulette(chooseRanges);
     }
+
 
     //every genotype get it's own number of points
     private int[] calculateFitPoints() {
         int[] fitPoints = new int[population.getSpecimens().size()];
 
         for (int i = 0; i < population.getSpecimens().size(); i++) {
-            fitPoints[i] = FitObject.getFitValue(population.getSpecimens().get(i));
-            if (fitPoints[i] > FitObject.getFitValue(population.getBestGenotype())) {
-                FitObject.setBestPhenotype(population.getSpecimens().get(i));
+            fitPoints[i] = fitObject.getFitValue(population.getSpecimens().get(i));
+
+            if (fitPoints[i] > fitObject.getFitValue(population.getBestGenotype())) {
+                fitObject.setBestPhenotype(population.getSpecimens().get(i));
             }
         }
         return fitPoints;
@@ -55,6 +55,7 @@ public class GeneticAlgorithm {
             sum += fitPoints[i];
         }
         return sum;
+
     }
 
     //calculating ranges to roulette method
@@ -71,8 +72,20 @@ public class GeneticAlgorithm {
         return chooseRange;
     }
 
+    private void makeSelectionBestN(){
+        ArrayList<boolean[]> newSpecimens = new ArrayList<>();
+        int[] fitPoints = calculateFitPoints();
+        int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
+
+        for(int i = fitPoints.length ; i > population.getSpecimens().size()/5 ; i--){
+            int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
+            newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
+        }
+        population = new Population(newSpecimens);
+    }
+
     //randomize new population by roulette method
-    private Population selectNewPopulation(double[] chooseRanges) {
+    private Population selectNewPopulationRoulette(double[] chooseRanges) {
         Random random = new Random();
         double spot;
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
@@ -107,7 +120,7 @@ public class GeneticAlgorithm {
     }
 
     public ArrayList<Item> getBestPhenotype() {
-        return FitObject.getBestPhenotype();
+        return fitObject.getBestPhenotype();
     }
 
 }

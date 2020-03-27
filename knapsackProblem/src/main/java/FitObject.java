@@ -30,20 +30,10 @@ public class FitObject {
     }
 
     private int getTotalValue(ArrayList<Item> phenotype) {
-        int totalValue = 0;
-        for (Item item : phenotype) {
-            totalValue += item.getValue();
-        }
-        return totalValue;
+        return phenotype.stream().mapToInt(Item::getValue).sum();
     }
 
     private boolean isWeightProperly(ArrayList<Item> phenotype) {
-        int totalWeight = 0;
-        for (Item item : phenotype) {
-            totalWeight += item.getWeight();
-            if (totalWeight > capacity)
-                return false;
-        }
-        return true;
+        return phenotype.stream().mapToInt(Item::getValue).sum() <= capacity;
     }
 }

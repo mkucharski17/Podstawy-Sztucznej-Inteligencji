@@ -37,12 +37,11 @@ public class Decoder {
 
     public boolean[] toGenotype(ArrayList<Item> phenotype) {
         boolean[] genotype = new boolean[items.size()];
-
         for (int i = 0; i < items.size(); i++)
             genotype[i] = phenotype.contains(items.get(i));
-
         return genotype;
     }
+
 
     public int getGensNumber() {
         return items.size();
