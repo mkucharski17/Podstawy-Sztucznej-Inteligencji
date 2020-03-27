@@ -25,7 +25,7 @@ public class Environment {
         return specimens;
     }
 
-    public ArrayList<Item> findBestMatch() {
+    public ArrayList<Item> findBestFit() {
         while (!geneticAlgorithm.isSatisfied()) {
             population = geneticAlgorithm.makeNewGeneration(population);
         }

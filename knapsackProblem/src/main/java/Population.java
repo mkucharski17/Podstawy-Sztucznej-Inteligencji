@@ -7,9 +7,9 @@ import java.util.Random;
 
 @Getter
 public class Population {
-    private ArrayList<boolean[]> specimens;
     @Setter
     private boolean[] bestGenotype;
+    private ArrayList<boolean[]> specimens;
 
 
     public Population(ArrayList<boolean[]> specimens) {
@@ -28,9 +28,9 @@ public class Population {
 
     private static boolean[] uniformCrossover(boolean[] mother, boolean[] father) {
         boolean[] child = new boolean[mother.length];
-        for (int i = 0 ; i < child.length ; i++){
+        for (int i = 0; i < child.length; i++) {
             boolean geneOrigin = new Random().nextBoolean();
-            if(geneOrigin)
+            if (geneOrigin)
                 child[i] = father[i];
             else
                 child[i] = mother[i];

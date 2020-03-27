@@ -4,14 +4,14 @@ import lombok.Setter;
 import java.util.ArrayList;
 
 
-public class MatchObject {
+public class FitObject {
     @Getter
     private ArrayList<Item> bestPhenotype;
     private Decoder decoder;
     private int capacity;
 
 
-    public MatchObject(Decoder decoder, int capacity) {
+    public FitObject(Decoder decoder, int capacity) {
         this.decoder = decoder;
         this.capacity = capacity;
     }
@@ -20,7 +20,7 @@ public class MatchObject {
         bestPhenotype = decoder.toPhenotype(genotype);
     }
 
-    public int getMatchValue(boolean[] genotype) {
+    public int getFitValue(boolean[] genotype) {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);
         int value = getTotalValue(phenotype);
         if (!isWeightProperly(phenotype))

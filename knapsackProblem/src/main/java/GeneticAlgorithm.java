@@ -8,29 +8,30 @@ import java.util.Random;
 
 public class GeneticAlgorithm {
 
-    @Getter
-    private static final int iterationNumber = 100;
+    private int iterationNumber = 100;
     private Population population;
-    private MatchObject matchObject;
-    private int iteration;
+    private FitObject FitObject;
 
     GeneticAlgorithm(int capacity, Decoder decoder) {
-        matchObject = new MatchObject(decoder, capacity);
-        iteration = 0;
+        FitObject = new FitObject(decoder, capacity);
     }
 
     public Population makeNewGeneration(Population population) {
         this.population = population;
-        makeSelection();
 
-        return population;
+        //TODO tutaj algorytm wybierania nowego pokolenia
+        // ( wybieranie rodziców do krzyżowania -> krzyżowanie -> mutacja -> zwracamynowe pokolenie)
+        // mutacje proponuję zrobić if(
+
+
+        return this.population;
     }
 
     private void makeSelection() {
         int[] fitPoints = calculateFitPoints();
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
-        double[] choseRanges = calculateChoseRanges(fitPoints, amountOfFitPoints);
-        this.population = selectNewPopulation(choseRanges);
+        double[] chooseRanges = calculateChooseRanges(fitPoints, amountOfFitPoints);
+        this.population = selectNewPopulation(chooseRanges);
     }
 
     //every genotype get it's own number of points
@@ -38,9 +39,9 @@ public class GeneticAlgorithm {
         int[] fitPoints = new int[population.getSpecimens().size()];
 
         for (int i = 0; i < population.getSpecimens().size(); i++) {
-            fitPoints[i] = matchObject.getMatchValue(population.getSpecimens().get(i));
-            if (fitPoints[i] > matchObject.getMatchValue(population.getBestGenotype())) {
-                matchObject.setBestPhenotype(population.getSpecimens().get(i));
+            fitPoints[i] = FitObject.getFitValue(population.getSpecimens().get(i));
+            if (fitPoints[i] > FitObject.getFitValue(population.getBestGenotype())) {
+                FitObject.setBestPhenotype(population.getSpecimens().get(i));
             }
         }
         return fitPoints;
@@ -57,21 +58,21 @@ public class GeneticAlgorithm {
     }
 
     //calculating ranges to roulette method
-    private double[] calculateChoseRanges(int[] fitPoints, int amountOfFitPoints) {
-        double[] choseRange = new double[population.getSpecimens().size()];
+    private double[] calculateChooseRanges(int[] fitPoints, int amountOfFitPoints) {
+        double[] chooseRange = new double[population.getSpecimens().size()];
 
         for (int i = 0; i < population.getSpecimens().size(); i++) {
             if (i == 0) {
-                choseRange[i] = (double) fitPoints[i] / amountOfFitPoints;
+                chooseRange[i] = (double) fitPoints[i] / amountOfFitPoints;
             } else {
-                choseRange[i] = choseRange[i - 1] + (double) fitPoints[i] / amountOfFitPoints;
+                chooseRange[i] = chooseRange[i - 1] + (double) fitPoints[i] / amountOfFitPoints;
             }
         }
-        return choseRange;
+        return chooseRange;
     }
 
     //randomize new population by roulette method
-    private Population selectNewPopulation(double[] choseRanges) {
+    private Population selectNewPopulation(double[] chooseRanges) {
         Random random = new Random();
         double spot;
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
@@ -85,10 +86,10 @@ public class GeneticAlgorithm {
                     newSpecimens.add(population.getSpecimens().get(i));
                 } else if (j == 0) {
                     //checking first range
-                    if (spot <= choseRanges[j]) {
+                    if (spot <= chooseRanges[j]) {
                         newSpecimens.add(population.getSpecimens().get(i));
                     }
-                } else if (spot <= choseRanges[j] && spot > choseRanges[j - 1]) { // checking if spot is between two next values
+                } else if (spot <= chooseRanges[j] && spot > chooseRanges[j - 1]) { // checking if spot is between two next values
                     newSpecimens.add(population.getSpecimens().get(i));
                 }
             }
@@ -97,16 +98,16 @@ public class GeneticAlgorithm {
     }
 
     public boolean isSatisfied() {
-        if (iteration == iterationNumber) {
+        if (iterationNumber == 0) {
             return true;
         } else {
-            iteration++;
+            iterationNumber--;
             return false;
         }
     }
 
-    public ArrayList<Item> getBestPhenotype(){
-        return matchObject.getBestPhenotype();
+    public ArrayList<Item> getBestPhenotype() {
+        return FitObject.getBestPhenotype();
     }
 
 }
