@@ -2,7 +2,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 @Getter
@@ -22,11 +21,11 @@ public class Population {
     }
 
     public void cross() {
-        int motherIndex = new Random().nextInt(specimens.get(0).length);
-        int fatherIndex = new Random().nextInt(specimens.get(0).length);
+        int motherIndex = new Random().nextInt(specimens.size());
+        int fatherIndex = new Random().nextInt(specimens.size());
 
         while (motherIndex != fatherIndex)
-            fatherIndex = new Random().nextInt(specimens.get(0).length);
+            fatherIndex = new Random().nextInt(specimens.size());
 
         specimens.add(uniformCrossover(specimens.get(motherIndex), specimens.get(fatherIndex)));
         // lub singlePointCrossover((specimens.get(motherIndex), specimens.get(fatherIndex)))
