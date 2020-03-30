@@ -12,7 +12,7 @@ public class Environment {
         geneticAlgorithm = new GeneticAlgorithm(capacity, decoder, population);
     }
 
-    //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 15
+    //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 3
     private ArrayList<boolean[]> generatePopulation(int gensNumber) {
         ArrayList<boolean[]> specimens = new ArrayList<>();
         Random r = new Random();
@@ -30,7 +30,6 @@ public class Environment {
         while (!geneticAlgorithm.isSatisfied()) {
             geneticAlgorithm.makeNewGeneration();
         }
-        System.out.println("poza petlą");
         return geneticAlgorithm.getBestPhenotype();
     }
 }

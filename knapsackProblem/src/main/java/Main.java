@@ -13,6 +13,7 @@ public class Main {
 
             Environment environment = new Environment(3, "src/main/resources/Inputs/input.txt");
             ArrayList<Item> answear = environment.findBestFit();
+        System.out.println("rozmiar odpowiedzi = " + answear.size());
             for(Item item : answear)
                 System.out.println(item.getWeight() + " " + item.getValue());
     }
