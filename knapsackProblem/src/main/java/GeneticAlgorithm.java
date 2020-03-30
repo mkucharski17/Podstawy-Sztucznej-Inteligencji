@@ -8,20 +8,18 @@ import java.util.stream.IntStream;
 
 public class GeneticAlgorithm {
 
-    private int iterationNumber = 100;
+    private int iterationNumber = 200;
     private Population population;
     private FitObject fitObject;
 
-    GeneticAlgorithm(int capacity, Decoder decoder) {
+    GeneticAlgorithm(int capacity, Decoder decoder, Population generatedPopulation) {
+        this.population = generatedPopulation;
         fitObject = new FitObject(decoder, capacity);
     }
 
-    public Population makeNewGeneration(Population oldpopulation) {
-        population = oldpopulation;
-        makeSelectionRoulette();//lub makeSelectionBestN()
+    public void  makeNewGeneration() {
         population.reproduct();
         population.mutate();
-        return this.population;
     }
 
 
@@ -40,9 +38,8 @@ public class GeneticAlgorithm {
         for (int i = 0; i < population.getSpecimens().size(); i++) {
             fitPoints[i] = fitObject.getFitValue(population.getSpecimens().get(i));
 
-            if (fitPoints[i] > fitObject.getFitValue(population.getBestGenotype())) {
+            if (fitPoints[i] > fitObject.getFitValue(fitObject.getBestGenotype()))
                 fitObject.setBestPhenotype(population.getSpecimens().get(i));
-            }
         }
         return fitPoints;
     }
@@ -77,7 +74,7 @@ public class GeneticAlgorithm {
         int[] fitPoints = calculateFitPoints();
         int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
 
-        for(int i = fitPoints.length ; i > population.getSpecimens().size()/5 ; i--){
+        for(int i = fitPoints.length - 1 ; i > population.getSpecimens().size()/5 ; i--){
             int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
             newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
         }
@@ -114,6 +111,8 @@ public class GeneticAlgorithm {
         if (iterationNumber == 0) {
             return true;
         } else {
+            //makeSelectionRoulette();
+            makeSelectionBestN();
             iterationNumber--;
             return false;
         }

@@ -21,6 +21,10 @@ public class FitObject {
         bestPhenotype = decoder.toPhenotype(genotype);
     }
 
+    public boolean [] getBestGenotype() {
+        return decoder.toGenotype(bestPhenotype);
+    }
+
     public int getFitValue(boolean[] genotype) {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);
         int value = getTotalValue(phenotype);
@@ -35,6 +39,6 @@ public class FitObject {
     }
 
     private boolean isWeightProperly(ArrayList<Item> phenotype) {
-        return phenotype.stream().mapToInt(Item::getValue).sum() <= capacity;
+        return phenotype.stream().mapToInt(Item::getWeight).sum() <= capacity;
     }
 }

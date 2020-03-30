@@ -11,7 +11,7 @@ public class Main {
 //        } else {
 //    }
 
-            Environment environment = new Environment(15, "src/main/resources/Inputs/input.txt");
+            Environment environment = new Environment(3, "src/main/resources/Inputs/input.txt");
             ArrayList<Item> answear = environment.findBestFit();
             for(Item item : answear)
                 System.out.println(item.getWeight() + " " + item.getValue());
