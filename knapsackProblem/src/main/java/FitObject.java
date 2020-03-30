@@ -14,6 +14,7 @@ public class FitObject {
     public FitObject(Decoder decoder, int capacity) {
         this.decoder = decoder;
         this.capacity = capacity;
+        bestPhenotype = new ArrayList<>();
     }
 
     public void setBestPhenotype(boolean[] genotype) {
@@ -24,7 +25,7 @@ public class FitObject {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);
         int value = getTotalValue(phenotype);
         if (!isWeightProperly(phenotype))
-            return capacity;
+            return 0;
         else
             return value;
     }
