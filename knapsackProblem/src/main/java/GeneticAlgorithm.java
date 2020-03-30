@@ -74,7 +74,7 @@ public class GeneticAlgorithm {
         int[] fitPoints = calculateFitPoints();
         int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
 
-        for(int i = fitPoints.length - 1 ; i > 2*Environment.targetPopulationSize- population.getSpecimens().size() ; i--){
+        for(int i = fitPoints.length - 1 ,j = 0  ; j < Environment.targetPopulationSize  ; j++, i--){
             int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
             newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
         }
@@ -109,9 +109,9 @@ public class GeneticAlgorithm {
     }
 
     public boolean isSatisfied() {
+        if(population.getSpecimens().size() > Environment.targetPopulationSize)
         //makeSelectionRoulette();
         makeSelectionBestN();
-
         if (iterationNumber == 0) {
             return true;
         } else {

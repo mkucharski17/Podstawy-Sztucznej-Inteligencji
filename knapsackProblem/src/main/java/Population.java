@@ -14,7 +14,7 @@ public class Population {
     }
 
     public void reproduct(){
-        for(int i = 0 ; i < specimens.size()/2 ; i++)
+        for(int i = 0 ; i < Environment.targetPopulationSize/2 ; i++)
             cross();
     }
 
