@@ -26,9 +26,12 @@ public class Environment {
     }
 
     public ArrayList<Item> findBestFit() {
+        int i = 0 ;
         while (!geneticAlgorithm.isSatisfied()) {
+            System.out.println(i++ + "w pętli");
             population = geneticAlgorithm.makeNewGeneration(population);
         }
+        System.out.println("poza petlą");
         return geneticAlgorithm.getBestPhenotype();
     }
 }

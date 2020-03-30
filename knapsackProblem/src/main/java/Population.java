@@ -12,7 +12,9 @@ public class Population {
 
 
     public Population(ArrayList<boolean[]> specimens) {
+
         this.specimens = specimens;
+        this.bestGenotype = new boolean[specimens.get(0).length];
     }
 
     public void reproduct(){
