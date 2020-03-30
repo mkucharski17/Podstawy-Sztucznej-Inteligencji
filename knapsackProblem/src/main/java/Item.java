@@ -9,8 +9,6 @@ public class Item {
         this.weight = weight;
         this.value = value;
     }
-
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Item) {

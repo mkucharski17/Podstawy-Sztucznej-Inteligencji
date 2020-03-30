@@ -10,7 +10,6 @@ public class Population {
 
 
     public Population(ArrayList<boolean[]> specimens) {
-
         this.specimens = specimens;
     }
 

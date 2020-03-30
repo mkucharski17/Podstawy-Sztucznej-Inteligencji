@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 
 
 public class GeneticAlgorithm {
-
     private int iterationNumber = 200;
     private Population population;
     private FitObject fitObject;
@@ -70,15 +69,17 @@ public class GeneticAlgorithm {
     }
 
     private void makeSelectionBestN(){
+        System.out.println(population.getSpecimens().size());
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
         int[] fitPoints = calculateFitPoints();
         int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
 
-        for(int i = fitPoints.length - 1 ; i > population.getSpecimens().size()/5 ; i--){
+        for(int i = fitPoints.length - 1 ; i > 2*Environment.targetPopulationSize- population.getSpecimens().size() ; i--){
             int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
             newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
         }
         population = new Population(newSpecimens);
+        System.out.println(population.getSpecimens().size());
     }
 
     //randomize new population by roulette method
@@ -108,11 +109,12 @@ public class GeneticAlgorithm {
     }
 
     public boolean isSatisfied() {
+        //makeSelectionRoulette();
+        makeSelectionBestN();
+
         if (iterationNumber == 0) {
             return true;
         } else {
-            //makeSelectionRoulette();
-            makeSelectionBestN();
             iterationNumber--;
             return false;
         }
@@ -121,5 +123,4 @@ public class GeneticAlgorithm {
     public ArrayList<Item> getBestPhenotype() {
         return fitObject.getBestPhenotype();
     }
-
 }
