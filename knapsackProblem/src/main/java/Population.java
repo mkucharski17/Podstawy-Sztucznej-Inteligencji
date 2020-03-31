@@ -8,14 +8,19 @@ import java.util.Random;
 public class Population {
 
     @Setter
-    private boolean[] bestSpecimen = null;
+    private boolean[] bestSpecimen;
     private ArrayList<boolean[]> specimens;
     private PopulationSelector populationSelector;
 
+    public Population(ArrayList<boolean[]> specimens) {
+        this.specimens = specimens;
+        this.bestSpecimen = new boolean[Environment.targetPopulationSize];
+    }
 
     public Population(ArrayList<boolean[]> specimens, PopulationSelector populationSelector) {
         this.specimens = specimens;
         this.populationSelector = populationSelector;
+        this.bestSpecimen = new boolean[Environment.targetPopulationSize];
     }
 
     public void makeSelection(){
@@ -25,6 +30,7 @@ public class Population {
     public void makeReproduction() {
         for (int i = 0; i < Environment.targetPopulationSize / 2; i++) {
             int[] parentsIndexes = getTwoRandomSpecimens();
+            //na potrzeby SinglePointCrossover int divisionPoint = new Random().nextInt((bestSpecimen.length));
             specimens.add(PopulationChanger.uniformCrossover(specimens.get(parentsIndexes[0]),
                     specimens.get(parentsIndexes[1])));
         }

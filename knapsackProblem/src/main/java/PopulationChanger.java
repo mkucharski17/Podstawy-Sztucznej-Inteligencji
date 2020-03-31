@@ -7,10 +7,8 @@ import java.util.Random;
 
 public class PopulationChanger {
 
-
-    public static boolean[] singlePointCrossover(boolean[] mother, boolean[] father) {
+    public static boolean[] singlePointCrossover(boolean[] mother, boolean[] father, int divisionPoint) {
         boolean[] child = new boolean[mother.length];
-        int divisionPoint = new Random().nextInt((mother.length));
 
         System.arraycopy(mother, 0, child, 0, divisionPoint);
         System.arraycopy(father, divisionPoint + 1, child, divisionPoint + 1, father.length - divisionPoint - 1);

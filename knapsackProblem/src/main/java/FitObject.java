@@ -14,7 +14,6 @@ public class FitObject {
         this.capacity = capacity;
     }
 
-    //every genotype get it's own number of points
     public int[] calculateFitPoints(Population population) {
         int[] fitPoints = new int[population.getSpecimens().size()];
 
