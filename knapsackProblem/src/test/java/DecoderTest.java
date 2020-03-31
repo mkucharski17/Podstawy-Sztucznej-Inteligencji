@@ -5,47 +5,48 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 public class DecoderTest {
     private Decoder decoder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         decoder = new Decoder("src/main/resources/Inputs/input.txt");
     }
 
     @Test
     public void toPhenotype() {
-        assertEquals(new ArrayList<>(Arrays.asList(
+        assertThat(new ArrayList<>(Arrays.asList(
                 new Item(1, 2),
                 new Item(2, 3),
                 new Item(4, 2)
         )
-        ), decoder.toPhenotype(new boolean[]{true, true, true, false, false, false}));
+        ),equalTo (decoder.toPhenotype(new boolean[]{true, true, true, false, false, false})));
 
-        assertEquals(new ArrayList<>(Collections.singletonList(
+        assertThat(new ArrayList<>(Collections.singletonList(
                 new Item(4, 2)
         )
-        ), decoder.toPhenotype(new boolean[]{false, false, true, false, false, false}));
+        ), equalTo (decoder.toPhenotype(new boolean[]{false, false, true, false, false, false})));
 
-        assertEquals(new ArrayList<>(Arrays.asList(
+        assertThat(new ArrayList<>(Arrays.asList(
                 new Item(4, 2),
                 new Item(8, 4)
         )
-        ), decoder.toPhenotype(new boolean[]{false, false, true, false, false, true}));
+        ), equalTo (decoder.toPhenotype(new boolean[]{false, false, true, false, false, true})));
 
-        assertEquals(new ArrayList<>(), decoder.toPhenotype(new boolean[]{false, false, false, false, false, false}));
+        assertThat(new ArrayList<>(), equalTo (decoder.toPhenotype(new boolean[]{false, false, false, false, false, false})));
 
-        assertEquals(new ArrayList<>(Arrays.asList(
+        assertThat(new ArrayList<>(Arrays.asList(
                 new Item(2, 3),
                 new Item(4, 2),
                 new Item(2, 7),
                 new Item(8, 4)
         )
-        ), decoder.toPhenotype(new boolean[]{false, true, true, true, false, true}));
+        ),equalTo ( decoder.toPhenotype(new boolean[]{false, true, true, true, false, true})));
 
-        assertEquals(new ArrayList<>(Arrays.asList(
+        assertThat(new ArrayList<>(Arrays.asList(
                 new Item(1, 2),
                 new Item(2, 3),
                 new Item(4, 2),
@@ -53,7 +54,7 @@ public class DecoderTest {
                 new Item(1, 4),
                 new Item(8, 4)
         )
-        ), decoder.toPhenotype(new boolean[]{true, true, true, true, true, true}));
+        ), equalTo (decoder.toPhenotype(new boolean[]{true, true, true, true, true, true})));
     }
 
 
