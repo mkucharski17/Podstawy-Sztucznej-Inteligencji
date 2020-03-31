@@ -15,18 +15,23 @@ public class Population {
 
     public void reproduct(){
         for(int i = 0 ; i < Environment.targetPopulationSize/2 ; i++)
-            cross();
+            cross(getTwoRandomSpecimens());
     }
 
-    public void cross() {
+    private void cross(int [] parentsIndexes) {
+        specimens.add(uniformCrossover(specimens.get(parentsIndexes[0]), specimens.get(parentsIndexes[1])));
+        // lub singlePointCrossover(specimens.get(parentsIndexes[0]), specimens.get(parentsIndexes[1])))
+    }
+
+    private int [] getTwoRandomSpecimens(){
         int motherIndex = new Random().nextInt(specimens.size());
         int fatherIndex = new Random().nextInt(specimens.size());
 
         while (motherIndex != fatherIndex)
             fatherIndex = new Random().nextInt(specimens.size());
 
-        specimens.add(uniformCrossover(specimens.get(motherIndex), specimens.get(fatherIndex)));
-        // lub singlePointCrossover((specimens.get(motherIndex), specimens.get(fatherIndex)))
+        return new int[]{motherIndex,fatherIndex};
+
     }
 
     private static boolean[] singlePointCrossover(boolean[] mother, boolean[] father) {
@@ -51,11 +56,11 @@ public class Population {
         return child;
     }
 
-    public void mutate() {
+    public void conductMutation(){
         for (boolean[] specimen : specimens) {
             if (isTimeToMutate()) {
                 int mutatedGene = new Random().nextInt(specimen.length);
-                specimen[mutatedGene] = specimen[mutatedGene];
+                specimen = mutate(specimen,mutatedGene);
             }
         }
     }
@@ -64,4 +69,11 @@ public class Population {
         return new Random().nextInt(10) == 0;
     }
 
+
+
+    public boolean[] mutate(boolean [] specimen, int mutatedGeneIndex ) {
+        specimen[mutatedGeneIndex] = !specimen[mutatedGeneIndex];
+
+        return specimen;
+    }
 }

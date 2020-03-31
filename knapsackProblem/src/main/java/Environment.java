@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Environment {
     //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 10
-    static int targetPopulationSize = 10;
+    static int targetPopulationSize = 30 ;
     private GeneticAlgorithm geneticAlgorithm;
 
     public Environment(int capacity, String fileName) {

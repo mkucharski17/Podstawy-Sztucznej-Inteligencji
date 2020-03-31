@@ -18,8 +18,10 @@ public class GeneticAlgorithm {
 
     public void  makeNewGeneration() {
         population.reproduct();
-        population.mutate();
+        population.conductMutation();
     }
+
+
 
 
     private void makeSelectionRoulette() {
@@ -68,20 +70,6 @@ public class GeneticAlgorithm {
         return chooseRange;
     }
 
-    private void makeSelectionBestN(){
-        System.out.println(population.getSpecimens().size());
-        ArrayList<boolean[]> newSpecimens = new ArrayList<>();
-        int[] fitPoints = calculateFitPoints();
-        int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
-
-        for(int i = fitPoints.length - 1 ,j = 0  ; j < Environment.targetPopulationSize  ; j++, i--){
-            int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
-            newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
-        }
-        population = new Population(newSpecimens);
-        System.out.println(population.getSpecimens().size());
-    }
-
     //randomize new population by roulette method
     private Population selectNewPopulationRoulette(double[] chooseRanges) {
         Random random = new Random();
@@ -106,6 +94,20 @@ public class GeneticAlgorithm {
             }
         }
         return new Population(newSpecimens);
+    }
+
+    private void makeSelectionBestN(){
+        System.out.println(population.getSpecimens().size());
+        ArrayList<boolean[]> newSpecimens = new ArrayList<>();
+        int[] fitPoints = calculateFitPoints();
+        int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
+
+        for(int i = fitPoints.length - 1 ,j = 0  ; j < Environment.targetPopulationSize  ; j++, i--){
+            int indexOfNextBestSpecimen =  Ints.indexOf(fitPoints,sortedFitPoints[i]);
+            newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
+        }
+        population = new Population(newSpecimens);
+        System.out.println(population.getSpecimens().size());
     }
 
     public boolean isSatisfied() {

@@ -11,7 +11,7 @@ public class DecoderTest {
     private Decoder decoder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         decoder = new Decoder("src/main/resources/Inputs/input.txt");
     }
 
