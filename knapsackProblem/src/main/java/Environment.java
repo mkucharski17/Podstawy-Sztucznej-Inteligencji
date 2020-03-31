@@ -5,13 +5,18 @@ import java.util.Random;
 
 public class Environment {
     //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 10
-    static int targetPopulationSize = 30 ;
+    static int targetPopulationSize = 10 ;
     private GeneticAlgorithm geneticAlgorithm;
+    private Decoder decoder;
 
     public Environment(int capacity, String fileName) {
-        Decoder decoder = new Decoder(fileName);
-        Population population = new Population(generatePopulation(decoder.getGensNumber()));
-        geneticAlgorithm = new GeneticAlgorithm(capacity, decoder, population);
+        decoder = new Decoder(fileName);
+        FitObject fitObject = new FitObject(decoder, capacity);
+        PopulationSelector populationSelector= new PopulationSelector(fitObject);
+
+        Population population = new Population(generatePopulation(decoder.getGensNumber()),
+                populationSelector);
+        geneticAlgorithm = new GeneticAlgorithm(population);
     }
 
 
@@ -33,6 +38,6 @@ public class Environment {
             System.out.println("iteracja nr " + i++);
             geneticAlgorithm.makeNewGeneration();
         }
-        return geneticAlgorithm.getBestPhenotype();
+        return decoder.toPhenotype(geneticAlgorithm.getBestFit());
     }
 }

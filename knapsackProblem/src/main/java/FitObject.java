@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 
 public class FitObject {
-    @Getter
-    private ArrayList<Item> bestPhenotype;
     private Decoder decoder;
     private int capacity;
 
@@ -14,16 +12,20 @@ public class FitObject {
     public FitObject(Decoder decoder, int capacity) {
         this.decoder = decoder;
         this.capacity = capacity;
-        bestPhenotype = new ArrayList<>();
     }
 
-    public void setBestPhenotype(boolean[] genotype) {
-        bestPhenotype = decoder.toPhenotype(genotype);
+    //every genotype get it's own number of points
+    public int[] calculateFitPoints(Population population) {
+        int[] fitPoints = new int[population.getSpecimens().size()];
+
+        for (int i = 0; i < population.getSpecimens().size(); i++) {
+            fitPoints[i] = getFitValue(population.getSpecimens().get(i));
+            if (fitPoints[i] > getFitValue(population.getBestSpecimen()))
+                population.setBestSpecimen(population.getSpecimens().get(i));
+        }
+        return fitPoints;
     }
 
-    public boolean [] getBestGenotype() {
-        return decoder.toGenotype(bestPhenotype);
-    }
 
     public int getFitValue(boolean[] genotype) {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);

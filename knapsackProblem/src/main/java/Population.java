@@ -6,74 +6,50 @@ import java.util.Random;
 
 @Getter
 public class Population {
+
+    @Setter
+    private boolean[] bestSpecimen = null;
     private ArrayList<boolean[]> specimens;
+    private PopulationSelector populationSelector;
 
 
-    public Population(ArrayList<boolean[]> specimens) {
+    public Population(ArrayList<boolean[]> specimens, PopulationSelector populationSelector) {
         this.specimens = specimens;
+        this.populationSelector = populationSelector;
     }
 
-    public void reproduct(){
-        for(int i = 0 ; i < Environment.targetPopulationSize/2 ; i++)
-            cross(getTwoRandomSpecimens());
+    public void makeSelection(){
+        specimens = populationSelector.selectBestN(this);
     }
 
-    private void cross(int [] parentsIndexes) {
-        specimens.add(uniformCrossover(specimens.get(parentsIndexes[0]), specimens.get(parentsIndexes[1])));
-        // lub singlePointCrossover(specimens.get(parentsIndexes[0]), specimens.get(parentsIndexes[1])))
+    public void makeReproduction() {
+        for (int i = 0; i < Environment.targetPopulationSize / 2; i++) {
+            int[] parentsIndexes = getTwoRandomSpecimens();
+            specimens.add(PopulationChanger.uniformCrossover(specimens.get(parentsIndexes[0]),
+                    specimens.get(parentsIndexes[1])));
+        }
     }
 
-    private int [] getTwoRandomSpecimens(){
+    public void makeMutation() {
+        for (int i = 0; i < specimens.size() - 1; i++) {
+            if (isTimeToMutate()) {
+                int mutatedGene = new Random().nextInt(specimens.get(i).length);
+                specimens.set(i, PopulationChanger.mutate(specimens.get(i), mutatedGene));
+            }
+        }
+    }
+    private boolean isTimeToMutate() {
+        return new Random().nextInt(10) == 0;
+    }
+
+
+    private int[] getTwoRandomSpecimens() {
         int motherIndex = new Random().nextInt(specimens.size());
         int fatherIndex = new Random().nextInt(specimens.size());
 
         while (motherIndex != fatherIndex)
             fatherIndex = new Random().nextInt(specimens.size());
 
-        return new int[]{motherIndex,fatherIndex};
-
-    }
-
-    private static boolean[] singlePointCrossover(boolean[] mother, boolean[] father) {
-        boolean[] child = new boolean[mother.length];
-        int divisionPoint = new Random().nextInt((mother.length));
-
-        System.arraycopy(mother, 0, child, 0, divisionPoint);
-        System.arraycopy(father, divisionPoint + 1, child, divisionPoint + 1, father.length - divisionPoint - 1);
-
-        return child;
-    }
-
-    private boolean[] uniformCrossover(boolean[] mother, boolean[] father) {
-        boolean[] child = new boolean[mother.length];
-        for (int i = 0; i < child.length; i++) {
-            boolean geneOrigin = new Random().nextBoolean();
-            if (geneOrigin)
-                child[i] = father[i];
-            else
-                child[i] = mother[i];
-        }
-        return child;
-    }
-
-    public void conductMutation(){
-        for (boolean[] specimen : specimens) {
-            if (isTimeToMutate()) {
-                int mutatedGene = new Random().nextInt(specimen.length);
-                specimen = mutate(specimen,mutatedGene);
-            }
-        }
-    }
-
-    private boolean isTimeToMutate() {
-        return new Random().nextInt(10) == 0;
-    }
-
-
-
-    public boolean[] mutate(boolean [] specimen, int mutatedGeneIndex ) {
-        specimen[mutatedGeneIndex] = !specimen[mutatedGeneIndex];
-
-        return specimen;
+        return new int[]{motherIndex, fatherIndex};
     }
 }
