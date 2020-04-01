@@ -22,7 +22,6 @@ public class GeneticAlgorithm {
 
     public boolean isSatisfied() {
         if(population.getSpecimens().size() > Environment.targetPopulationSize)
-        //makeSelectionRoulette();
         population.makeSelection();
         if (iterationNumber == 0) {
             return true;

@@ -23,12 +23,12 @@ public class PopulationSelector {
         return newSpecimens;
     }
 
-    private ArrayList<boolean[]> makeSelectionRoulette(Population population) {
+    public ArrayList<boolean[]> makeSelectionRoulette(Population population) {
         int[] fitPoints = fitObject.calculateFitPoints(population);
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
         double[] chooseRanges = calculateChooseRanges(fitPoints, amountOfFitPoints);
-        
         return selectNewPopulationRoulette(chooseRanges, population.getSpecimens());
+
     }
 
     //summary value of fitPoints
