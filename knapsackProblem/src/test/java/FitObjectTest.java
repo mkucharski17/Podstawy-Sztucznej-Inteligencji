@@ -14,7 +14,7 @@ public class FitObjectTest {
 
     @Before
     public void setUp(){
-        Decoder decoder = new Decoder("src/main/resources/Inputs/input.txt");
+        Decoder decoder = new Decoder("src/main/resources/Inputs/input_1.txt");
         fitObject = new FitObject(decoder,10);
     }
 

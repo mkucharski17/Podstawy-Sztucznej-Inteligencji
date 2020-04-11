@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 
 public class GeneticAlgorithm {
-    private int iterationNumber = 200;
+    private int iterationNumber = 50;
     private Population population;
 
 

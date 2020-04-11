@@ -9,11 +9,19 @@ public class Main {
         if (args.length != 2) {
             System.err.println("Wrong number of arguments!");
         } else {
+            long start = System.currentTimeMillis();
             Environment environment = new Environment(Integer.parseInt(args[0]), args[1]);
             ArrayList<Item> answear = environment.findBestFit();
-            System.out.println("rozmiar odpowiedzi = " + answear.size());
-            for(Item item : answear)
+            long time = System.currentTimeMillis() - start;
+            System.out.println("Rozmiar odpowiedzi = " + answear.size());
+            int summaryValue = 0, summaryWeight = 0;
+            for(Item item : answear){
                 System.out.println(item.getWeight() + " " + item.getValue());
+                summaryValue += item.getValue();
+                summaryWeight += item.getWeight();
+            }
+            System.out.println("Waga rozwiazania: " + summaryWeight + "\nWartosc rozwiazania: " + summaryValue);
+            System.out.println("Czas dzialania: " + time);
         }
     }
 }

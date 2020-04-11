@@ -13,7 +13,7 @@ public class DecoderTest {
 
     @Before
     public void setUp() {
-        decoder = new Decoder("src/main/resources/Inputs/input.txt");
+        decoder = new Decoder("src/main/resources/Inputs/input_1.txt");
     }
 
     @Test
