@@ -11,7 +11,7 @@ public class GeneticAlgorithm {
     private int iterationNumber = 50;
     private Population population;
 
-    private int satisfiedCounter = 15;
+    private int satisfiedCounter = 100;
     private boolean[] lastBest;
 
 
@@ -44,7 +44,7 @@ public class GeneticAlgorithm {
             if(Arrays.equals(lastBest,getBestFit())){
                 satisfiedCounter--;
             }else{
-                satisfiedCounter=15;
+                satisfiedCounter=100;
                 lastBest=getBestFit();
             }
             iterationNumber--;
