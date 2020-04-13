@@ -14,27 +14,28 @@ public class Environment {
         FitObject fitObject = new FitObject(decoder, capacity);
         PopulationSelector populationSelector= new PopulationSelector(fitObject);
 
-        Population population = new Population(generatePopulation(decoder.getGensNumber()),
+        Population population = new Population(generatePopulation(decoder.getGensNumber(),fitObject),
                 populationSelector);
         geneticAlgorithm = new GeneticAlgorithm(population);
     }
 
 
-    private ArrayList<boolean[]> generatePopulation(int gensNumber) {
+    private ArrayList<boolean[]> generatePopulation(int gensNumber, FitObject fitObject) {
         ArrayList<boolean[]> specimens = new ArrayList<>();
         Random r = new Random();
-        for (int i = 0; i < targetPopulationSize; i++) {
+        do{
             boolean[] newSpecimen = new boolean[gensNumber];
             for (int j = 0; j < gensNumber; j++)
                 newSpecimen[j] = r.nextBoolean();
-            specimens.add(newSpecimen);
-        }
+            if(fitObject.getFitValue(newSpecimen) > 0)
+                specimens.add(newSpecimen);
+        }while(specimens.size()<targetPopulationSize);
         return specimens;
     }
 
     public ArrayList<Item> findBestFit() {
         int i = 0 ;
-        while (!geneticAlgorithm.isSatisfied()) {
+        while (!geneticAlgorithm.isSatisfiedLastNSame()) {
             System.out.println("iteracja nr " + i++);
             geneticAlgorithm.makeNewGeneration();
         }
