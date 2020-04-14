@@ -2,6 +2,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 @Getter
@@ -24,8 +25,8 @@ public class Population {
     }
 
     public void makeSelection(){
-        //specimens = populationSelector.selectBestN(this);
-        specimens = populationSelector.makeSelectionRoulette(this);
+        specimens = populationSelector.selectBestN(this);
+        //specimens = populationSelector.makeSelectionRoulette(this);
     }
 
     public void makeReproduction() {
@@ -41,7 +42,8 @@ public class Population {
         for (int i = 0; i < specimens.size() - 1; i++) {
             if (isTimeToMutate()) {
                 int mutatedGene = new Random().nextInt(specimens.get(i).length);
-                specimens.set(i, PopulationChanger.mutate(specimens.get(i), mutatedGene));
+                if(!Arrays.equals(specimens.get(i),bestSpecimen))
+                    specimens.set(i, PopulationChanger.mutate(specimens.get(i), mutatedGene));
             }
         }
     }
@@ -54,7 +56,7 @@ public class Population {
         int motherIndex = new Random().nextInt(specimens.size());
         int fatherIndex = new Random().nextInt(specimens.size());
 
-        while (motherIndex != fatherIndex)
+        while (motherIndex == fatherIndex)
             fatherIndex = new Random().nextInt(specimens.size());
 
         return new int[]{motherIndex, fatherIndex};

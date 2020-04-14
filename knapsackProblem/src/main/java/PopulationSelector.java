@@ -15,8 +15,8 @@ public class PopulationSelector {
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
         int[] fitPoints = fitObject.calculateFitPoints(population);
         int[] sortedFitPoints = Arrays.stream(fitPoints).sorted().toArray();
-
-        for (int i = fitPoints.length - 1, j = 0; j < Environment.targetPopulationSize; j++, i--) {
+        newSpecimens.add(population.getBestSpecimen());
+        for (int i = fitPoints.length - 1, j = 1; j < Environment.targetPopulationSize; j++, i--) {
             int indexOfNextBestSpecimen = Ints.indexOf(fitPoints, sortedFitPoints[i]);
             newSpecimens.add(population.getSpecimens().get(indexOfNextBestSpecimen));
         }
@@ -27,7 +27,7 @@ public class PopulationSelector {
         int[] fitPoints = fitObject.calculateFitPoints(population);
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
         double[] chooseRanges = calculateChooseRanges(fitPoints, amountOfFitPoints);
-        return selectNewPopulationRoulette(chooseRanges, population.getSpecimens());
+        return selectNewPopulationRoulette(chooseRanges, population.getSpecimens(),population);
 
     }
 
@@ -55,11 +55,11 @@ public class PopulationSelector {
     }
 
     //randomize new population by roulette method
-    private ArrayList<boolean[]> selectNewPopulationRoulette(double[] chooseRanges, ArrayList<boolean[]> specimens) {
+    private ArrayList<boolean[]> selectNewPopulationRoulette(double[] chooseRanges, ArrayList<boolean[]> specimens, Population population) {
         double spot;
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
-
-        for (int i = 0; i < specimens.size(); i++) {
+        newSpecimens.add(population.getBestSpecimen());
+        for (int i = 1; i < specimens.size(); i++) {
             spot = new Random().nextDouble() * 100;
             for (int j = 0; j < specimens.size(); j++) {
                 //looking for range in which is our random spot
