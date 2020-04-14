@@ -25,8 +25,8 @@ public class Population {
     }
 
     public void makeSelection(){
-        specimens = populationSelector.selectBestN(this);
-        //specimens = populationSelector.makeSelectionRoulette(this);
+        //specimens = populationSelector.selectBestN(this);
+        specimens = populationSelector.makeSelectionRoulette(this);
     }
 
     public void makeReproduction() {

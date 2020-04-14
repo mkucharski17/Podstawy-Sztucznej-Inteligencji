@@ -20,7 +20,6 @@ public class FitObject {
         for (int i = 0; i < population.getSpecimens().size(); i++) {
             fitPoints[i] = getFitValue(population.getSpecimens().get(i));
             if (fitPoints[i] > getFitValue(population.getBestSpecimen())){
-                System.out.println("Last best:\t"+getFitValue(population.getBestSpecimen())+"\n"+"New best:\t"+fitPoints[i]);
                 population.setBestSpecimen(population.getSpecimens().get(i));
             }
         }
