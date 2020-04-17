@@ -4,13 +4,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Class responsible for making selection of population.
+ */
+
 public class PopulationSelector {
+    /**
+     * FitObject handling calculating values of genotypes.
+     */
     private FitObject fitObject;
 
+    /**
+     * PopulationSelector constructor.
+     * @param fitObject Object used to calculate values, weights of genotypes/items.
+     */
     public PopulationSelector(FitObject fitObject) {
         this.fitObject = fitObject;
     }
 
+    /**
+     * Selection BestN.
+     * This selection algorithm select best(with highest value) n specimens.
+     * @param population Start population which need to be selected.
+     * @return           List of specimens after selection.
+     */
     public ArrayList<boolean[]> selectBestN(Population population) {
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
         int[] fitPoints = fitObject.calculateFitPoints(population);
@@ -23,6 +40,12 @@ public class PopulationSelector {
         return newSpecimens;
     }
 
+    /**
+     * Getting ready params for roulette selection.
+     * This selection algorithm randomly save specimens. Better(with higher value) specimens have higher chance for being chosen.
+     * @param population Start population which need to be selected.
+     * @return           List of specimens after selection.
+     */
     public ArrayList<boolean[]> makeSelectionRoulette(Population population) {
         int[] fitPoints = fitObject.calculateFitPoints(population);
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
@@ -31,7 +54,11 @@ public class PopulationSelector {
 
     }
 
-    //summary value of fitPoints
+    /**
+     * Summary of fit points.
+     * @param fitPoints Table of values representing fit points.
+     * @return          Summary value of fit points.
+     */
     private int calculateAmountOfFitPoints(int[] fitPoints) {
         int sum = 0;
 
@@ -40,7 +67,12 @@ public class PopulationSelector {
         return sum;
     }
 
-    //calculating ranges to roulette method
+    /**
+     * Calculating ranges for each next item(represented by fitPoints).
+     * @param fitPoints         Table of values representing fit points.
+     * @param amountOfFitPoints Summary value of fit points.
+     * @return                  Table of ranges(which size represent probability of being chosen by selection)
+     */
     private double[] calculateChooseRanges(int[] fitPoints, int amountOfFitPoints) {
         double[] chooseRange = new double[fitPoints.length];
 
@@ -54,7 +86,13 @@ public class PopulationSelector {
         return chooseRange;
     }
 
-    //randomize new population by roulette method
+    /**
+     * Making new population be Roulette selection.
+     * @param chooseRanges  Ranges representing probability.
+     * @param specimens     List of specimens.
+     * @param population    Actual population.
+     * @return              List of specimens after selection.
+     */
     private ArrayList<boolean[]> selectNewPopulationRoulette(double[] chooseRanges, ArrayList<boolean[]> specimens, Population population) {
         double spot;
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();

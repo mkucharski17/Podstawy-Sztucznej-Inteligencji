@@ -1,10 +1,21 @@
-
-
 import com.google.common.primitives.Ints;
 
 import java.util.ArrayList;
 
+/**
+ * Main class of algorithm resolving backpack problem.
+ * Project for Podstawy Sztucznej Inteligencji classes.
+ *
+ * @author Stanisław Czobot
+ * @author Michał Kucharski
+ * @version 17/4/2020
+ */
 public class Main {
+
+    /**
+     * Main method.
+     * @param args Input arguments: capacity(int greater than 0), population size(int greater than 0), selection type('R' Roulette selection, 'B' BestN selection), input filename(.txt)
+     */
     public static void main(String[] args) {
         if (checkArguments(args)) {
             long start = System.currentTimeMillis();
@@ -23,6 +34,12 @@ public class Main {
         }
     }
 
+    /**
+     * Check all input arguments if they are in correct form.
+     * That method secures algorithm from getting incorrect start values.
+     * @param args Table of arguments to check correctness.
+     * @return True if all arguments are correct, algorithm can be safely run.
+     */
     private static boolean checkArguments(String[] args){
         if(args.length != 4){
             System.err.println("Wrong number of arguments!\nThere should be 4 arguments:\n\t1. Capacity as integer greater than 0" +

@@ -3,8 +3,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Program resolving backpack problem using brute force algorithm.
+ */
+
 public class BruteForce {
 
+    /**
+     * Main method.
+     * @param args Input arguments: capacity(int greater than 0), input filename(.txt)
+     */
     public static void main(String[] args){
         if(checkArguments(args)){
             long start = System.currentTimeMillis();
@@ -23,6 +31,12 @@ public class BruteForce {
         }
     }
 
+    /**
+     * Check all input arguments if they are in correct form.
+     * That method secures algorithm from getting incorrect start values.
+     * @param args Table of arguments to check correctness.
+     * @return True if all arguments are correct, algorithm can be safely run.
+     */
     private static boolean checkArguments(String[] args){
         if(args.length != 2){
             System.err.println("Wrong number of arguments!\nThere should be 2 arguments:\n\t1. Capacity as integer greater than 0" +
