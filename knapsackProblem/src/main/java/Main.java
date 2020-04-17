@@ -8,12 +8,12 @@ public class Main {
     public static void main(String[] args) {
         if (checkArguments(args)) {
             long start = System.currentTimeMillis();
-            Environment environment = new Environment(Integer.parseInt(args[0]), args[3]);
-            ArrayList<Item> answear = environment.findBestFit();
+            Environment environment = new Environment(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2].charAt(0), args[3]);
+            ArrayList<Item> answer = environment.findBestFit();
             long time = System.currentTimeMillis() - start;
-            System.out.println("Rozmiar odpowiedzi = " + answear.size());
+            System.out.println("Rozmiar odpowiedzi = " + answer.size());
             int summaryValue = 0, summaryWeight = 0;
-            for(Item item : answear){
+            for(Item item : answer){
                 System.out.println(item.getWeight() + " " + item.getValue());
                 summaryValue += item.getValue();
                 summaryWeight += item.getWeight();
@@ -35,7 +35,7 @@ public class Main {
         } else if(Integer.parseInt(args[1]) <= 0){
             System.err.println("Wrong population size!\nPopulation size should be greater than 0.");
             return false;
-        } else if(!args[2].equals("R") && !args[2].equals("B") && !args[2].equals("r") && !args[2].equals("b")){
+        } else if(args[2].charAt(0) != Population.ROULETTE_SELECTION && args[2].charAt(0) != Population.BESTN_SELECTION){
             System.err.println("Wrong selection type!\nUse:\n\tR - for Roulette selection\n\tB - for BestN selection");
             return false;
         } else if(args[3].length() <= 4){

@@ -8,25 +8,33 @@ import java.util.Random;
 @Getter
 public class Population {
 
+    public static char ROULETTE_SELECTION = 'R';
+    public static char BESTN_SELECTION = 'B';
+
     @Setter
     private boolean[] bestSpecimen;
     private ArrayList<boolean[]> specimens;
     private PopulationSelector populationSelector;
+    private char selectionType;
 
-    public Population(ArrayList<boolean[]> specimens) {
+    public Population(char selectionType, ArrayList<boolean[]> specimens) {
+        this.selectionType = selectionType;
         this.specimens = specimens;
         this.bestSpecimen = new boolean[Environment.targetPopulationSize];
     }
 
-    public Population(ArrayList<boolean[]> specimens, PopulationSelector populationSelector) {
+    public Population(char selectionType, ArrayList<boolean[]> specimens, PopulationSelector populationSelector) {
+        this.selectionType = selectionType;
         this.specimens = specimens;
         this.populationSelector = populationSelector;
         this.bestSpecimen = new boolean[Environment.targetPopulationSize];
     }
 
     public void makeSelection(){
-        //specimens = populationSelector.selectBestN(this);
-        specimens = populationSelector.makeSelectionRoulette(this);
+        if(selectionType == BESTN_SELECTION)
+            specimens = populationSelector.selectBestN(this);
+        else if(selectionType == ROULETTE_SELECTION)
+            specimens = populationSelector.makeSelectionRoulette(this);
     }
 
     public void makeReproduction() {

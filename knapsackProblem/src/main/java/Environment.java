@@ -4,17 +4,17 @@ import java.util.Random;
 
 
 public class Environment {
-    //TODO dowiedziec sie jakiej wielkosci powinna byc poczatkowa populacja, tutaj 10
-    static int targetPopulationSize = 100 ;
+    static int targetPopulationSize ;
     private GeneticAlgorithm geneticAlgorithm;
     private Decoder decoder;
 
-    public Environment(int capacity, String fileName) {
+    public Environment(int capacity, int targetPopulationSize, char selectionType, String fileName) {
+        Environment.targetPopulationSize = targetPopulationSize;
         decoder = new Decoder(fileName);
         FitObject fitObject = new FitObject(decoder, capacity);
         PopulationSelector populationSelector= new PopulationSelector(fitObject);
 
-        Population population = new Population(generatePopulation(decoder.getGensNumber(),fitObject),
+        Population population = new Population(selectionType,generatePopulation(decoder.getGensNumber(),fitObject),
                 populationSelector);
         geneticAlgorithm = new GeneticAlgorithm(population);
     }
