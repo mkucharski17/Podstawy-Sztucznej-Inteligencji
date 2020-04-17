@@ -37,7 +37,7 @@ public class FitObjectTest {
                 new boolean[]{false, false, false, true, false, false},
                 new boolean[]{true, false, true, true, false, false}
                 )));
-        assertArrayEquals(new int[]{0,7,0,12,7,11},fitObject.calculateFitPoints(population));
+        assertArrayEquals(new int[]{0,5,0,12,7,11},fitObject.calculateFitPoints(population));
 
         population = new Population(new ArrayList<>(Arrays.asList(
                 new boolean[]{true, true, false, true, false, false},
@@ -47,7 +47,7 @@ public class FitObjectTest {
                 new boolean[]{false, false, true, false, true, false},
                 new boolean[]{false, false, true, true, false, false}
         )));
-        assertArrayEquals(new int[]{12,4,7,12,6,9},fitObject.calculateFitPoints(population));
+        assertArrayEquals(new int[]{12,2,7,12,6,9},fitObject.calculateFitPoints(population));
 
 
         population = new Population(new ArrayList<>(Arrays.asList(

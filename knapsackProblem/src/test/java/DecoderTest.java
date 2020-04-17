@@ -32,7 +32,7 @@ public class DecoderTest {
 
         assertThat(new ArrayList<>(Arrays.asList(
                 new Item(4, 2),
-                new Item(8, 4)
+                new Item(8, 2)
         )
         ), equalTo (decoder.toPhenotype(new boolean[]{false, false, true, false, false, true})));
 
@@ -42,7 +42,7 @@ public class DecoderTest {
                 new Item(2, 3),
                 new Item(4, 2),
                 new Item(2, 7),
-                new Item(8, 4)
+                new Item(8, 2)
         )
         ),equalTo ( decoder.toPhenotype(new boolean[]{false, true, true, true, false, true})));
 
@@ -52,7 +52,7 @@ public class DecoderTest {
                 new Item(4, 2),
                 new Item(2, 7),
                 new Item(1, 4),
-                new Item(8, 4)
+                new Item(8, 2)
         )
         ), equalTo (decoder.toPhenotype(new boolean[]{true, true, true, true, true, true})));
     }
@@ -60,7 +60,7 @@ public class DecoderTest {
 
     @Test
     public void toGenotype() {
-        assertArrayEquals(new boolean[]{true, true, true, true, true, true}
+        assertArrayEquals(new boolean[]{true, true, true, true, true, false}
                 , decoder.toGenotype(new ArrayList<>(Arrays.asList(
                         new Item(1, 2),
                         new Item(2, 3),
@@ -70,7 +70,7 @@ public class DecoderTest {
                         new Item(8, 4)
                 ))));
 
-        assertArrayEquals(new boolean[]{false, false, false, true, true, true}
+        assertArrayEquals(new boolean[]{false, false, false, true, true, false}
                 , decoder.toGenotype(new ArrayList<>(Arrays.asList(
                         new Item(2, 7),
                         new Item(1, 4),
@@ -87,7 +87,7 @@ public class DecoderTest {
         assertArrayEquals(new boolean[]{false, false, false, false, false, false}
                 , decoder.toGenotype(new ArrayList<>()));
 
-        assertArrayEquals(new boolean[]{false, false, false, false, false, true}
+        assertArrayEquals(new boolean[]{false, false, false, false, false, false}
                 , decoder.toGenotype(new ArrayList<>(Collections.singletonList(new Item(8, 4)
                 ))));
     }
