@@ -67,9 +67,9 @@ public class Environment {
     public ArrayList<Item> findBestFit() {
         int i = 0 ;
         while (!geneticAlgorithm.isSatisfiedLastNSame()) {
-            System.out.println("iteracja nr " + i++);
             geneticAlgorithm.makeNewGeneration();
         }
+        System.out.println("liczba iteracji = " + i);
         return decoder.toPhenotype(geneticAlgorithm.getBestFit());
     }
 }
