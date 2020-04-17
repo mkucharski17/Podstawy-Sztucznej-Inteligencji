@@ -4,23 +4,49 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import static java.lang.Math.*;
 
+/**
+ * Brute force algorithm resolving backpack problem.
+ */
+
 public class BruteAlgorithm{
+    /**
+     * Capacity of backpack.
+     */
     private int capacity;
+    /**
+     * List of items.
+     */
     private ArrayList<Item> items;
 
-    private Node[] capabilities;
+    /**
+     * Params of all possible gens capabilities.
+     */
+    private CapabilityParams[] capabilities;
 
-    private class Node{
+    /**
+     * Inside class representing params of one capability in our problem.
+     */
+    private class CapabilityParams {
         private int value;
         private boolean isInCapacity;
-        Node(int value, boolean isInCapacity){ this.value = value; this.isInCapacity = isInCapacity; }
+        CapabilityParams(int value, boolean isInCapacity){ this.value = value; this.isInCapacity = isInCapacity; }
     }
 
+    /**
+     * Brute force algorithm constructor.
+     * @param capacity Capacity of backpack.
+     * @param fileName File to read item values.
+     */
     BruteAlgorithm(int capacity, String fileName){
         this.capacity = capacity;
         readValuesFromFile(fileName);
-        capabilities = new Node[(int)pow(2,items.size())];
+        capabilities = new CapabilityParams[(int)pow(2,items.size())];
     }
+
+    /**
+     * Method handling file operations(reading file and saving values).
+     * @param fileName File name from which decoder should read values.
+     */
     private void readValuesFromFile(String fileName) {
         try {
             Scanner scanner = new Scanner(new File(fileName));
@@ -34,22 +60,29 @@ public class BruteAlgorithm{
         }
     }
 
+    /**
+     * That method start algorithm.
+     * @return Best phenotype found by algorithm.
+     */
     public ArrayList<Item> runAlgorithm(){
-        calculateNodes();
-        String bestPhenotype = findBestFit();
-        ArrayList<Item> output = new ArrayList<Item>();
-        for(int j = 0;j<bestPhenotype.length();j++){
-            if(bestPhenotype.charAt(j) == '1'){
-                output.add(items.get(bestPhenotype.length()-j-1));
+        calculateCapabilityParams();
+        String bestPhenotypeAsString = findBestFit();
+        ArrayList<Item> bestPhenotype = new ArrayList<Item>();
+        for(int j = 0;j<bestPhenotypeAsString.length();j++){
+            if(bestPhenotypeAsString.charAt(j) == '1'){
+                bestPhenotype.add(items.get(bestPhenotypeAsString.length()-j-1));
             }
         }
-        return output;
+        return bestPhenotype;
     }
 
-    private void calculateNodes(){
+    /**
+     * Calculate values of every possible genotype.
+     */
+    private void calculateCapabilityParams(){
         for(int i=0;i<capabilities.length;i++){
             if(i == 0){
-                capabilities[i] = new Node(0,true);
+                capabilities[i] = new CapabilityParams(0,true);
             }else{
                 String combinationInBinary = toBinaryString(i,items.size());
                 int value=0, weight=0;
@@ -60,21 +93,32 @@ public class BruteAlgorithm{
                     }
                 }
                 if(weight <= capacity)
-                    capabilities[i] = new Node(value,true);
+                    capabilities[i] = new CapabilityParams(value,true);
                 else
-                    capabilities[i] = new Node(value,false);
+                    capabilities[i] = new CapabilityParams(value,false);
             }
         }
     }
 
-    private String toBinaryString(int a, int length){
+    /**
+     * Convert int value into String(which represent binary representation of given int and is given length long).
+     * Example: toBinaryString(2,4) return "0010"
+     * @param integerValue Value to convert.
+     * @param length       Length of output String.
+     * @return             String, which represent binary representation of given int and is given length long.
+     */
+    private String toBinaryString(int integerValue, int length){
         if(length > 0)
         {
-            return String.format("%" + length + "s", Integer.toBinaryString(a)).replaceAll(" ", "0");
+            return String.format("%" + length + "s", Integer.toBinaryString(integerValue)).replaceAll(" ", "0");
         }
         return null;
     }
 
+    /**
+     * Finding best phenotype when all values are already calculated.
+     * @return Best phenotype as String.
+     */
     private String findBestFit(){
         int bestFit = 0;
         int bestFitIndex = 0;
