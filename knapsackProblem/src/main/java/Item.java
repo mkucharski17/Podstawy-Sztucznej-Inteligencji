@@ -17,6 +17,7 @@ public class Item {
 
     /**
      * Item constructor
+     *
      * @param weight New item weight.
      * @param value  New item value.
      */
@@ -27,8 +28,9 @@ public class Item {
 
     /**
      * Override equals method.
+     *
      * @param obj Object which equality is being checked.
-     * @return    True if items are equal.
+     * @return True if items are equal.
      */
     @Override
     public boolean equals(Object obj) {
