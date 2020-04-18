@@ -37,6 +37,7 @@ public class GeneticAlgorithm {
 
     /**
      * GeneticAlgorithm constructor.
+     *
      * @param generatedPopulation Start population for algorithm.
      */
     GeneticAlgorithm(Population generatedPopulation) {
@@ -46,18 +47,19 @@ public class GeneticAlgorithm {
     /**
      * Making new generation on population by reproduction and mutation.
      */
-    public void  makeNewGeneration() {
+    public void makeNewGeneration() {
         population.makeReproduction();
         population.makeMutation();
     }
 
     /**
      * Simply stop condition based on the number of iterations.
+     *
      * @return True if stop condition is confirmed.
      */
     public boolean isSatisfied() {
-        if(population.getSpecimens().size() > Environment.targetPopulationSize)
-        population.makeSelection();
+        if (population.getSpecimens().size() > Environment.targetPopulationSize)
+            population.makeSelection();
         if (iterationNumber == 0) {
             return true;
         } else {
@@ -68,19 +70,20 @@ public class GeneticAlgorithm {
 
     /**
      * Stop condition is confirmed when population best specimen is the same for last 50 times;
+     *
      * @return True if stop condition is confirmed.
      */
     public boolean isSatisfiedLastNSame() {
-        if(population.getSpecimens().size() > Environment.targetPopulationSize)
+        if (population.getSpecimens().size() > Environment.targetPopulationSize)
             population.makeSelection();
         if (satisfiedCounter == 0) {
             return true;
         } else {
-            if(Arrays.equals(lastBest,getBestFit())){
+            if (Arrays.equals(lastBest, getBestFit())) {
                 satisfiedCounter--;
-            }else{
-                satisfiedCounter=SATISFIED_COUNTER_VALUE;
-                lastBest=getBestFit();
+            } else {
+                satisfiedCounter = SATISFIED_COUNTER_VALUE;
+                lastBest = getBestFit();
             }
             return false;
         }
@@ -88,9 +91,10 @@ public class GeneticAlgorithm {
 
     /**
      * Return best already found speciment.
+     *
      * @return Best already found genotype.
      */
-    public boolean[] getBestFit(){
+    public boolean[] getBestFit() {
         return population.getBestSpecimen();
     }
 }

@@ -16,6 +16,7 @@ public class PopulationSelector {
 
     /**
      * PopulationSelector constructor.
+     *
      * @param fitObject Object used to calculate values, weights of genotypes/items.
      */
     public PopulationSelector(FitObject fitObject) {
@@ -25,8 +26,9 @@ public class PopulationSelector {
     /**
      * Selection BestN.
      * This selection algorithm select best(with highest value) n specimens.
+     *
      * @param population Start population which need to be selected.
-     * @return           List of specimens after selection.
+     * @return List of specimens after selection.
      */
     public ArrayList<boolean[]> selectBestN(Population population) {
         ArrayList<boolean[]> newSpecimens = new ArrayList<>();
@@ -43,21 +45,23 @@ public class PopulationSelector {
     /**
      * Getting ready params for roulette selection.
      * This selection algorithm randomly save specimens. Better(with higher value) specimens have higher chance for being chosen.
+     *
      * @param population Start population which need to be selected.
-     * @return           List of specimens after selection.
+     * @return List of specimens after selection.
      */
     public ArrayList<boolean[]> makeSelectionRoulette(Population population) {
         int[] fitPoints = fitObject.calculateFitPoints(population);
         int amountOfFitPoints = calculateAmountOfFitPoints(fitPoints);
         double[] chooseRanges = calculateChooseRanges(fitPoints, amountOfFitPoints);
-        return selectNewPopulationRoulette(chooseRanges, population.getSpecimens(),population);
+        return selectNewPopulationRoulette(chooseRanges, population.getSpecimens(), population);
 
     }
 
     /**
      * Summary of fit points.
+     *
      * @param fitPoints Table of values representing fit points.
-     * @return          Summary value of fit points.
+     * @return Summary value of fit points.
      */
     private int calculateAmountOfFitPoints(int[] fitPoints) {
         int sum = 0;
@@ -69,9 +73,10 @@ public class PopulationSelector {
 
     /**
      * Calculating ranges for each next item(represented by fitPoints).
+     *
      * @param fitPoints         Table of values representing fit points.
      * @param amountOfFitPoints Summary value of fit points.
-     * @return                  Table of ranges(which size represent probability of being chosen by selection)
+     * @return Table of ranges(which size represent probability of being chosen by selection)
      */
     private double[] calculateChooseRanges(int[] fitPoints, int amountOfFitPoints) {
         double[] chooseRange = new double[fitPoints.length];
@@ -88,10 +93,11 @@ public class PopulationSelector {
 
     /**
      * Making new population be Roulette selection.
-     * @param chooseRanges  Ranges representing probability.
-     * @param specimens     List of specimens.
-     * @param population    Actual population.
-     * @return              List of specimens after selection.
+     *
+     * @param chooseRanges Ranges representing probability.
+     * @param specimens    List of specimens.
+     * @param population   Actual population.
+     * @return List of specimens after selection.
      */
     private ArrayList<boolean[]> selectNewPopulationRoulette(double[] chooseRanges, ArrayList<boolean[]> specimens, Population population) {
         double spot;

@@ -20,6 +20,7 @@ public class FitObject {
 
     /**
      * FitObject constructor
+     *
      * @param decoder  Decoder object which contains all items in our instance of problem.
      * @param capacity Capacity of backpack.
      */
@@ -30,15 +31,16 @@ public class FitObject {
 
     /**
      * Calculating fit points of every genotype in given population.
+     *
      * @param population Population which fit points need to be calculate.
-     * @return           Table of fit points in the same order as in given population.
+     * @return Table of fit points in the same order as in given population.
      */
     public int[] calculateFitPoints(Population population) {
         int[] fitPoints = new int[population.getSpecimens().size()];
 
         for (int i = 0; i < population.getSpecimens().size(); i++) {
             fitPoints[i] = getFitValue(population.getSpecimens().get(i));
-            if (fitPoints[i] > getFitValue(population.getBestSpecimen())){
+            if (fitPoints[i] > getFitValue(population.getBestSpecimen())) {
                 population.setBestSpecimen(population.getSpecimens().get(i));
             }
         }
@@ -50,8 +52,9 @@ public class FitObject {
      * Fit value is equal 0 when:
      * 1. Genotype don't have any items.
      * 2. Genotype capacity is greater than capacity.
+     *
      * @param genotype Genotype to calculate fit points value.
-     * @return         Fit value.
+     * @return Fit value.
      */
     public int getFitValue(boolean[] genotype) {
         ArrayList<Item> phenotype = decoder.toPhenotype(genotype);
@@ -64,8 +67,9 @@ public class FitObject {
 
     /**
      * Getting summary value of items in given phenotype.
+     *
      * @param phenotype Phenotype to sum value.
-     * @return          Summary value of items.
+     * @return Summary value of items.
      */
     private int getTotalValue(ArrayList<Item> phenotype) {
         return phenotype.stream().mapToInt(Item::getValue).sum();
@@ -73,8 +77,9 @@ public class FitObject {
 
     /**
      * Checking if given phenotype weight is less or equal capacity.
+     *
      * @param phenotype Phenotype to check.
-     * @return          True if weight is less or equal capacity.
+     * @return True if weight is less or equal capacity.
      */
     private boolean isWeightProperly(ArrayList<Item> phenotype) {
         return phenotype.stream().mapToInt(Item::getWeight).sum() <= capacity;

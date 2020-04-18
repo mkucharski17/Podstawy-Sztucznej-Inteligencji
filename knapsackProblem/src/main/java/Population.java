@@ -41,7 +41,8 @@ public class Population {
 
     /**
      * Population constructor for tests.
-     * @param specimens     ArrayList of specimens.
+     *
+     * @param specimens ArrayList of specimens.
      */
     public Population(ArrayList<boolean[]> specimens) {
         this.specimens = specimens;
@@ -50,9 +51,10 @@ public class Population {
 
     /**
      * Population constructor.
-     * @param selectionType         Type of using selection.
-     * @param specimens             ArrayList of specimens.
-     * @param populationSelector    Object of population selector used to make selection.
+     *
+     * @param selectionType      Type of using selection.
+     * @param specimens          ArrayList of specimens.
+     * @param populationSelector Object of population selector used to make selection.
      */
     public Population(char selectionType, ArrayList<boolean[]> specimens, PopulationSelector populationSelector) {
         this.selectionType = selectionType;
@@ -64,10 +66,10 @@ public class Population {
     /**
      * Performing the selection depending on the given mode(selectionType).
      */
-    public void makeSelection(){
-        if(selectionType == BESTN_SELECTION)
+    public void makeSelection() {
+        if (selectionType == BESTN_SELECTION)
             specimens = populationSelector.selectBestN(this);
-        else if(selectionType == ROULETTE_SELECTION)
+        else if (selectionType == ROULETTE_SELECTION)
             specimens = populationSelector.makeSelectionRoulette(this);
     }
 
@@ -90,7 +92,7 @@ public class Population {
         for (int i = 0; i < specimens.size() - 1; i++) {
             if (isTimeToMutate()) {
                 int mutatedGene = new Random().nextInt(specimens.get(i).length);
-                if(!Arrays.equals(specimens.get(i),bestSpecimen))
+                if (!Arrays.equals(specimens.get(i), bestSpecimen))
                     specimens.set(i, PopulationChanger.mutate(specimens.get(i), mutatedGene));
             }
         }
@@ -98,6 +100,7 @@ public class Population {
 
     /**
      * Method to generate random boolean with 10% for true;
+     *
      * @return True in 10% random cases.
      */
     private boolean isTimeToMutate() {
@@ -108,6 +111,7 @@ public class Population {
     /**
      * Generating two random specimens indexes, used for population reproduction.
      * First index represent mother index, second father index.
+     *
      * @return Table of two indexes for random specimens.
      */
     private int[] getTwoRandomSpecimens() {

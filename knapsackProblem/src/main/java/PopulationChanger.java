@@ -13,10 +13,11 @@ public class PopulationChanger {
     /**
      * Crossover made with single dividing point.
      * Gens before dividing point are taken from mother genotype, gens after dividing point are taken form father genotype.
-     * @param mother         Mother genotype.
-     * @param father         Father genotype.
-     * @param divisionPoint  Point dividing father and mother genotypes.
-     * @return               Child genotype.
+     *
+     * @param mother        Mother genotype.
+     * @param father        Father genotype.
+     * @param divisionPoint Point dividing father and mother genotypes.
+     * @return Child genotype.
      */
     public static boolean[] singlePointCrossover(boolean[] mother, boolean[] father, int divisionPoint) {
         boolean[] child = new boolean[mother.length];
@@ -30,9 +31,10 @@ public class PopulationChanger {
     /**
      * Uniform crossover.
      * Next gens are randomly taken from father or mother.
-     * @param mother         Mother genotype.
-     * @param father         Father genotype.
-     * @return               Child genotype.
+     *
+     * @param mother Mother genotype.
+     * @param father Father genotype.
+     * @return Child genotype.
      */
     public static boolean[] uniformCrossover(boolean[] mother, boolean[] father) {
         boolean[] child = new boolean[mother.length];
@@ -49,9 +51,10 @@ public class PopulationChanger {
 
     /**
      * Mutating gen o given index.
-     * @param specimen          Genotype to mutate.
-     * @param mutatedGeneIndex  Index of gen to muted.
-     * @return                  Mutated genotype.
+     *
+     * @param specimen         Genotype to mutate.
+     * @param mutatedGeneIndex Index of gen to muted.
+     * @return Mutated genotype.
      */
     public static boolean[] mutate(boolean[] specimen, int mutatedGeneIndex) {
         specimen[mutatedGeneIndex] = !specimen[mutatedGeneIndex];

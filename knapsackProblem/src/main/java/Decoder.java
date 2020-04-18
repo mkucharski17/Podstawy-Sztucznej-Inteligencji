@@ -16,6 +16,7 @@ public class Decoder {
 
     /**
      * Decoder constructor.
+     *
      * @param fileName File name from which decoder should read values.
      */
     public Decoder(String fileName) {
@@ -24,6 +25,7 @@ public class Decoder {
 
     /**
      * Method handling file operations(reading file and saving values).
+     *
      * @param fileName File name from which decoder should read values.
      */
     private void readValuesFromFile(String fileName) {
@@ -41,8 +43,9 @@ public class Decoder {
 
     /**
      * Transforming genotype represented by boolean table to phenotype represented by ArrayList of Items.
+     *
      * @param genotype Genotype to transform.
-     * @return         Phenotype of given genotype.
+     * @return Phenotype of given genotype.
      */
     public ArrayList<Item> toPhenotype(boolean[] genotype) {
         ArrayList<Item> phenotype = new ArrayList<>();
@@ -58,8 +61,9 @@ public class Decoder {
 
     /**
      * Transforming phenotype represented by ArrayList of Items to genotype represented by boolean table.
+     *
      * @param phenotype Phenotype to transform.
-     * @return          Genotype of given phenotype.
+     * @return Genotype of given phenotype.
      */
     public boolean[] toGenotype(ArrayList<Item> phenotype) {
         boolean[] genotype = new boolean[items.size()];

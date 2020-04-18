@@ -2,13 +2,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import static java.lang.Math.*;
 
 /**
  * Brute force algorithm resolving backpack problem.
  */
 
-public class BruteAlgorithm{
+public class BruteAlgorithm {
     /**
      * Capacity of backpack.
      */
@@ -29,22 +30,28 @@ public class BruteAlgorithm{
     private class CapabilityParams {
         private int value;
         private boolean isInCapacity;
-        CapabilityParams(int value, boolean isInCapacity){ this.value = value; this.isInCapacity = isInCapacity; }
+
+        CapabilityParams(int value, boolean isInCapacity) {
+            this.value = value;
+            this.isInCapacity = isInCapacity;
+        }
     }
 
     /**
      * Brute force algorithm constructor.
+     *
      * @param capacity Capacity of backpack.
      * @param fileName File to read item values.
      */
-    BruteAlgorithm(int capacity, String fileName){
+    BruteAlgorithm(int capacity, String fileName) {
         this.capacity = capacity;
         readValuesFromFile(fileName);
-        capabilities = new CapabilityParams[(int)pow(2,items.size())];
+        capabilities = new CapabilityParams[(int) pow(2, items.size())];
     }
 
     /**
      * Method handling file operations(reading file and saving values).
+     *
      * @param fileName File name from which decoder should read values.
      */
     private void readValuesFromFile(String fileName) {
@@ -62,15 +69,16 @@ public class BruteAlgorithm{
 
     /**
      * That method start algorithm.
+     *
      * @return Best phenotype found by algorithm.
      */
-    public ArrayList<Item> runAlgorithm(){
+    public ArrayList<Item> runAlgorithm() {
         calculateCapabilityParams();
         String bestPhenotypeAsString = findBestFit();
         ArrayList<Item> bestPhenotype = new ArrayList<Item>();
-        for(int j = 0;j<bestPhenotypeAsString.length();j++){
-            if(bestPhenotypeAsString.charAt(j) == '1'){
-                bestPhenotype.add(items.get(bestPhenotypeAsString.length()-j-1));
+        for (int j = 0; j < bestPhenotypeAsString.length(); j++) {
+            if (bestPhenotypeAsString.charAt(j) == '1') {
+                bestPhenotype.add(items.get(bestPhenotypeAsString.length() - j - 1));
             }
         }
         return bestPhenotype;
@@ -79,23 +87,23 @@ public class BruteAlgorithm{
     /**
      * Calculate values of every possible genotype.
      */
-    private void calculateCapabilityParams(){
-        for(int i=0;i<capabilities.length;i++){
-            if(i == 0){
-                capabilities[i] = new CapabilityParams(0,true);
-            }else{
-                String combinationInBinary = toBinaryString(i,items.size());
-                int value=0, weight=0;
-                for(int j = 0;j<combinationInBinary.length();j++){
-                    if(combinationInBinary.charAt(j) == '1'){
-                        value += items.get(combinationInBinary.length()-j-1).getValue();
-                        weight += items.get(combinationInBinary.length()-j-1).getWeight();
+    private void calculateCapabilityParams() {
+        for (int i = 0; i < capabilities.length; i++) {
+            if (i == 0) {
+                capabilities[i] = new CapabilityParams(0, true);
+            } else {
+                String combinationInBinary = toBinaryString(i, items.size());
+                int value = 0, weight = 0;
+                for (int j = 0; j < combinationInBinary.length(); j++) {
+                    if (combinationInBinary.charAt(j) == '1') {
+                        value += items.get(combinationInBinary.length() - j - 1).getValue();
+                        weight += items.get(combinationInBinary.length() - j - 1).getWeight();
                     }
                 }
-                if(weight <= capacity)
-                    capabilities[i] = new CapabilityParams(value,true);
+                if (weight <= capacity)
+                    capabilities[i] = new CapabilityParams(value, true);
                 else
-                    capabilities[i] = new CapabilityParams(value,false);
+                    capabilities[i] = new CapabilityParams(value, false);
             }
         }
     }
@@ -103,13 +111,13 @@ public class BruteAlgorithm{
     /**
      * Convert int value into String(which represent binary representation of given int and is given length long).
      * Example: toBinaryString(2,4) return "0010"
+     *
      * @param integerValue Value to convert.
      * @param length       Length of output String.
-     * @return             String, which represent binary representation of given int and is given length long.
+     * @return String, which represent binary representation of given int and is given length long.
      */
-    private String toBinaryString(int integerValue, int length){
-        if(length > 0)
-        {
+    private String toBinaryString(int integerValue, int length) {
+        if (length > 0) {
             return String.format("%" + length + "s", Integer.toBinaryString(integerValue)).replaceAll(" ", "0");
         }
         return null;
@@ -117,17 +125,18 @@ public class BruteAlgorithm{
 
     /**
      * Finding best phenotype when all values are already calculated.
+     *
      * @return Best phenotype as String.
      */
-    private String findBestFit(){
+    private String findBestFit() {
         int bestFit = 0;
         int bestFitIndex = 0;
-        for(int i=0; i<capabilities.length; i++){
-            if(capabilities[i].isInCapacity && capabilities[i].value >= bestFit){
+        for (int i = 0; i < capabilities.length; i++) {
+            if (capabilities[i].isInCapacity && capabilities[i].value >= bestFit) {
                 bestFit = capabilities[i].value;
-                bestFitIndex=i;
+                bestFitIndex = i;
             }
         }
-        return toBinaryString(bestFitIndex,items.size());
+        return toBinaryString(bestFitIndex, items.size());
     }
 }
